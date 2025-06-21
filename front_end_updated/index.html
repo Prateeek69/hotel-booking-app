@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StayEase - Hotel Booking Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
+    <!-- Sticky Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i data-lucide="hotel" style="width: 20px; height: 20px; color: white;"></i>
+                    </div>
+                    <span class="logo-text">StayEase</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Hotels</a>
+                    <a href="#" class="nav-link">About</a>
+                    <a href="#" class="nav-link">Contact</a>
+                </div>
+
+                <!-- Desktop Auth Buttons -->
+                <div class="auth-buttons">
+                    <button class="btn btn-ghost">Login</button>
+                    <button class="btn btn-primary">Sign Up</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobile-menu-button">
+                    <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="#" class="mobile-menu-item">Home</a>
+                <a href="#" class="mobile-menu-item">Hotels</a>
+                <a href="#" class="mobile-menu-item">About</a>
+                <a href="#" class="mobile-menu-item">Contact</a>
+                <div style="display: flex; gap: 1rem; padding: 0.75rem;">
+                    <button class="btn btn-ghost">Login</button>
+                    <button class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Search Bar -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Find Your Perfect Stay</h1>
+                <p class="hero-subtitle">Discover amazing hotels at unbeatable prices</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <div class="search-grid">
+                    <!-- Location Input -->
+                    <div class="search-field">
+                        <label class="search-label">Location</label>
+                        <div style="position: relative;">
+                            <i data-lucide="map-pin" class="search-icon"></i>
+                            <input type="text" placeholder="Where are you going?" class="search-input">
+                        </div>
+                    </div>
+
+                    <!-- Check-in Date -->
+                    <div class="search-field">
+                        <label class="search-label">Check-in</label>
+                        <div style="position: relative;">
+                            <i data-lucide="calendar" class="search-icon"></i>
+                            <input type="date" class="search-input">
+                        </div>
+                    </div>
+
+                    <!-- Check-out Date -->
+                    <div class="search-field">
+                        <label class="search-label">Check-out</label>
+                        <div style="position: relative;">
+                            <i data-lucide="calendar" class="search-icon"></i>
+                            <input type="date" class="search-input">
+                        </div>
+                    </div>
+
+                    <!-- Guests Selector -->
+                    <div class="search-field">
+                        <label class="search-label">Guests</label>
+                        <div style="position: relative;">
+                            <i data-lucide="users" class="search-icon"></i>
+                            <select class="search-input">
+                                <option>1 Adult</option>
+                                <option>2 Adults</option>
+                                <option>2 Adults, 1 Child</option>
+                                <option>3 Adults</option>
+                                <option>4+ Guests</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Button -->
+                <button class="search-btn">
+                    <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+                    <span>Search Hotels</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Filter Sidebar -->
+                <aside class="sidebar">
+                    <div class="filter-card">
+                        <h2 class="filter-title">Filters</h2>
+
+                        <!-- Price Range -->
+                        <div class="filter-section">
+                            <h3 class="filter-section-title">Price Range</h3>
+                            <input type="range" min="0" max="500" value="250" class="price-range">
+                            <div class="price-labels">
+                                <span>$0</span>
+                                <span>$500+</span>
+                            </div>
+                        </div>
+
+                        <!-- Star Rating -->
+                        <div class="filter-section">
+                            <h3 class="filter-section-title">Star Rating</h3>
+                            <div class="filter-options">
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="stars">
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                        </div>
+                                        <span class="filter-option-label" style="margin-left: 0.5rem;">5 Stars</span>
+                                    </div>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="stars">
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px;"></i>
+                                        </div>
+                                        <span class="filter-option-label" style="margin-left: 0.5rem;">4+ Stars</span>
+                                    </div>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="stars">
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px;"></i>
+                                        </div>
+                                        <span class="filter-option-label" style="margin-left: 0.5rem;">3+ Stars</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Room Type -->
+                        <div class="filter-section">
+                            <h3 class="filter-section-title">Room Type</h3>
+                            <div class="filter-options">
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Single</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Double</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Deluxe</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Suite</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Amenities -->
+                        <div class="filter-section">
+                            <h3 class="filter-section-title">Amenities</h3>
+                            <div class="filter-options">
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">WiFi</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Swimming Pool</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Air Conditioning</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Gym</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Parking</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Restaurant</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" class="filter-checkbox">
+                                    <span class="filter-option-label">Pet Friendly</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Clear Filters Button -->
+                        <button class="clear-filters-btn">Clear All Filters</button>
+                    </div>
+                </aside>
+
+                <!-- Hotel Listings -->
+                <section class="listings">
+                    <!-- Results Header -->
+                    <div class="listings-header">
+                        <h2 class="listings-title">Available Hotels</h2>
+                        <div class="listings-controls">
+                            <span class="results-count">1,234 properties found</span>
+                            <select class="sort-select">
+                                <option>Sort by: Recommended</option>
+                                <option>Price: Low to High</option>
+                                <option>Price: High to Low</option>
+                                <option>Rating: High to Low</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Cards Grid -->
+                    <div class="hotel-grid">
+                        <!-- Hotel Card 1 -->
+                        <article class="hotel-card">
+                            <div class="hotel-image-container">
+                                <img src="/placeholder.svg?height=200&width=400" alt="Grand Plaza Hotel" class="hotel-image">
+                                <div class="hotel-badge badge-discount">20% OFF</div>
+                                <div class="hotel-favorite">
+                                    <i data-lucide="heart" style="width: 16px; height: 16px;"></i>
+                                </div>
+                            </div>
+                            <div class="hotel-content">
+                                <div class="hotel-header">
+                                    <h3 class="hotel-name">Grand Plaza Hotel</h3>
+                                    <div class="hotel-rating">
+                                        <div class="stars">
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px;"></i>
+                                        </div>
+                                        <span class="rating-score">4.2</span>
+                                    </div>
+                                </div>
+                                <p class="hotel-location">
+                                    <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+                                    Downtown, New York
+                                </p>
+                                <div class="hotel-tags">
+                                    <span class="hotel-tag tag-blue">Deluxe</span>
+                                    <span class="hotel-tag tag-green">Free WiFi</span>
+                                    <span class="hotel-tag tag-purple">Pool</span>
+                                </div>
+                                <div class="hotel-amenities-price">
+                                    <div class="hotel-amenities">
+                                        <i data-lucide="wifi" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="car" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="utensils" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="dumbbell" style="width: 16px; height: 16px;"></i>
+                                    </div>
+                                    <div class="hotel-price">
+                                        <div class="price-amount">$129</div>
+                                        <div class="price-period">per night</div>
+                                    </div>
+                                </div>
+                                <div class="hotel-actions">
+                                    <button class="btn-secondary">View Details</button>
+                                    <button class="btn-primary-action">Book Now</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Hotel Card 2 -->
+                        <article class="hotel-card">
+                            <div class="hotel-image-container">
+                                <img src="/placeholder.svg?height=200&width=400" alt="Ocean View Resort" class="hotel-image">
+                                <div class="hotel-favorite">
+                                    <i data-lucide="heart" style="width: 16px; height: 16px;"></i>
+                                </div>
+                            </div>
+                            <div class="hotel-content">
+                                <div class="hotel-header">
+                                    <h3 class="hotel-name">Ocean View Resort</h3>
+                                    <div class="hotel-rating">
+                                        <div class="stars">
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                        </div>
+                                        <span class="rating-score">4.8</span>
+                                    </div>
+                                </div>
+                                <p class="hotel-location">
+                                    <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+                                    Miami Beach, Florida
+                                </p>
+                                <div class="hotel-tags">
+                                    <span class="hotel-tag tag-blue">Suite</span>
+                                    <span class="hotel-tag tag-green">Ocean View</span>
+                                    <span class="hotel-tag tag-purple">Spa</span>
+                                </div>
+                                <div class="hotel-amenities-price">
+                                    <div class="hotel-amenities">
+                                        <i data-lucide="wifi" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="car" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="utensils" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="waves" style="width: 16px; height: 16px;"></i>
+                                    </div>
+                                    <div class="hotel-price">
+                                        <div class="price-amount">$299</div>
+                                        <div class="price-period">per night</div>
+                                    </div>
+                                </div>
+                                <div class="hotel-actions">
+                                    <button class="btn-secondary">View Details</button>
+                                    <button class="btn-primary-action">Book Now</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Hotel Card 3 -->
+                        <article class="hotel-card">
+                            <div class="hotel-image-container">
+                                <img src="/placeholder.svg?height=200&width=400" alt="Mountain Lodge" class="hotel-image">
+                                <div class="hotel-badge badge-bestseller">Best Seller</div>
+                                <div class="hotel-favorite">
+                                    <i data-lucide="heart" style="width: 16px; height: 16px; fill: currentColor; color: #ef4444;"></i>
+                                </div>
+                            </div>
+                            <div class="hotel-content">
+                                <div class="hotel-header">
+                                    <h3 class="hotel-name">Mountain Lodge</h3>
+                                    <div class="hotel-rating">
+                                        <div class="stars">
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px;"></i>
+                                        </div>
+                                        <span class="rating-score">4.5</span>
+                                    </div>
+                                </div>
+                                <p class="hotel-location">
+                                    <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+                                    Aspen, Colorado
+                                </p>
+                                <div class="hotel-tags">
+                                    <span class="hotel-tag tag-blue">Double</span>
+                                    <span class="hotel-tag tag-green">Mountain View</span>
+                                    <span class="hotel-tag tag-purple">Fireplace</span>
+                                </div>
+                                <div class="hotel-amenities-price">
+                                    <div class="hotel-amenities">
+                                        <i data-lucide="wifi" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="car" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="utensils" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="mountain" style="width: 16px; height: 16px;"></i>
+                                    </div>
+                                    <div class="hotel-price">
+                                        <div class="price-amount">$189</div>
+                                        <div class="price-period">per night</div>
+                                    </div>
+                                </div>
+                                <div class="hotel-actions">
+                                    <button class="btn-secondary">View Details</button>
+                                    <button class="btn-primary-action">Book Now</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Hotel Card 4 - Sold Out -->
+                        <article class="hotel-card sold-out">
+                            <div class="hotel-image-container">
+                                <img src="/placeholder.svg?height=200&width=400" alt="City Center Hotel" class="hotel-image">
+                                <div class="hotel-favorite">
+                                    <i data-lucide="heart" style="width: 16px; height: 16px;"></i>
+                                </div>
+                            </div>
+                            <div class="hotel-content">
+                                <div class="hotel-header">
+                                    <h3 class="hotel-name">City Center Hotel</h3>
+                                    <div class="hotel-rating">
+                                        <div class="stars">
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px;"></i>
+                                            <i data-lucide="star" style="width: 16px; height: 16px;"></i>
+                                        </div>
+                                        <span class="rating-score">3.9</span>
+                                    </div>
+                                </div>
+                                <p class="hotel-location">
+                                    <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+                                    Chicago, Illinois
+                                </p>
+                                <div class="hotel-tags">
+                                    <span class="hotel-tag tag-blue">Single</span>
+                                    <span class="hotel-tag tag-green">Business Center</span>
+                                </div>
+                                <div class="hotel-amenities-price">
+                                    <div class="hotel-amenities">
+                                        <i data-lucide="wifi" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="car" style="width: 16px; height: 16px;"></i>
+                                        <i data-lucide="utensils" style="width: 16px; height: 16px;"></i>
+                                    </div>
+                                    <div class="hotel-price">
+                                        <div class="price-amount">$89</div>
+                                        <div class="price-period">per night</div>
+                                    </div>
+                                </div>
+                                <div class="hotel-actions">
+                                    <button class="btn-secondary" disabled>View Details</button>
+                                    <button class="btn-primary-action" disabled>Sold Out</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav class="pagination" aria-label="Pagination">
+                        <button class="pagination-btn" disabled>
+                            <i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i>
+                        </button>
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <span class="pagination-btn">...</span>
+                        <button class="pagination-btn">10</button>
+                        <button class="pagination-btn">
+                            <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
+                        </button>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Info -->
+                <div class="footer-section">
+                    <div class="logo" style="margin-bottom: 1rem;">
+                        <div class="logo-icon">
+                            <i data-lucide="hotel" style="width: 20px; height: 20px; color: white;"></i>
+                        </div>
+                        <span class="logo-text">StayEase</span>
+                    </div>
+                    <p class="footer-description">Your trusted partner for finding the perfect accommodation worldwide.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i data-lucide="facebook" style="width: 20px; height: 20px;"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i data-lucide="twitter" style="width: 20px; height: 20px;"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i data-lucide="instagram" style="width: 20px; height: 20px;"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i data-lucide="linkedin" style="width: 20px; height: 20px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- About Us -->
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Safety</a></li>
+                        <li><a href="#">Cancellation</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-bottom">
+                <p>&copy; 2024 StayEase. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
